@@ -1,0 +1,9 @@
+﻿@namespace CSStack.SuBlazor
+
+@if (NotificationService.NotificationContexts.Any())
+{
+    @foreach (var notification in NotificationService.NotificationContexts)
+    {
+        <DynamicComponent Type="notification.ComponentType" Parameters="notification.Parameters" />
+    }
+}
