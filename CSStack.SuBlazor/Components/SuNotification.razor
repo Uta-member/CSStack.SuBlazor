@@ -2,8 +2,10 @@
 
 @if (NotificationService.NotificationContexts.Any())
 {
-    @foreach (var notification in NotificationService.NotificationContexts)
-    {
-        <DynamicComponent Type="notification.ComponentType" Parameters="notification.Parameters" />
-    }
+    <div class="@CssClassName" style="z-index: @NotificationService.ZIndex;">
+        @foreach (var notification in SortedNotificationContexts)
+        {
+            <DynamicComponent Type="notification.ComponentType" Parameters="notification.Parameters" />
+        }
+    </div>
 }

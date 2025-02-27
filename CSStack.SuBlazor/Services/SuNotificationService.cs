@@ -10,10 +10,47 @@ namespace CSStack.SuBlazor
     {
         private readonly object _lock = new();
 
+        public SuNotificationService(Options options)
+        {
+            DefaultDuration = options.DefaultDuration;
+            HorizontalStartPosition = options.HorizontalStartPosition;
+            Orientation = options.Orientation;
+            VerticalStartPosition = options.VerticalStartPosition;
+            ZIndex = options.ZIndex;
+        }
+
         /// <summary>
         /// NotificationContextsの変更イベント
         /// </summary>
         public event Action? OnNotificationContextsChange;
+
+        /// <summary>
+        /// 通知開始水平位置
+        /// </summary>
+        public enum HorizontalStartPositionEnum
+        {
+            Left = 0,
+            Center = 1,
+            Right = 2,
+        }
+
+        /// <summary>
+        /// 通知スタックの向き
+        /// </summary>
+        public enum OrientationEnum
+        {
+            Vertical = 0,
+            VerticalReverse = 1,
+        }
+
+        /// <summary>
+        /// 通知開始垂直位置
+        /// </summary>
+        public enum VerticalStartPositionEnum
+        {
+            Top = 0,
+            Bottom = 1,
+        }
 
         /// <summary>
         /// デフォルトの表示時間
@@ -21,9 +58,29 @@ namespace CSStack.SuBlazor
         public int DefaultDuration { get; set; } = 4000;
 
         /// <summary>
+        /// 通知開始水平位置
+        /// </summary>
+        public HorizontalStartPositionEnum HorizontalStartPosition { get; set; } = HorizontalStartPositionEnum.Right;
+
+        /// <summary>
         /// 表示中の通知コンテキスト
         /// </summary>
         public ImmutableList<NotificationContext> NotificationContexts { get; private set; } = [];
+
+        /// <summary>
+        /// 通知スタックの向き
+        /// </summary>
+        public OrientationEnum Orientation { get; set; } = OrientationEnum.Vertical;
+
+        /// <summary>
+        /// 通知開始垂直位置
+        /// </summary>
+        public VerticalStartPositionEnum VerticalStartPosition { get; set; } = VerticalStartPositionEnum.Top;
+
+        /// <summary>
+        /// 通知のZIndex
+        /// </summary>
+        public int ZIndex { get; set; } = 3;
 
         /// <summary>
         /// 通知を閉じる
@@ -83,6 +140,38 @@ namespace CSStack.SuBlazor
         }
 
         private void NotifyStateChanged() => OnNotificationContextsChange?.Invoke();
+
+        public sealed record Options
+        {
+            /// <summary>
+            /// デフォルトの表示時間
+            /// </summary>
+            public int DefaultDuration { get; set; } = 4000;
+
+            /// <summary>
+            /// 通知開始水平位置
+            /// </summary>
+            public HorizontalStartPositionEnum HorizontalStartPosition
+            {
+                get;
+                set;
+            } = HorizontalStartPositionEnum.Right;
+
+            /// <summary>
+            /// 通知スタックの向き
+            /// </summary>
+            public OrientationEnum Orientation { get; set; } = OrientationEnum.Vertical;
+
+            /// <summary>
+            /// 通知開始垂直位置
+            /// </summary>
+            public VerticalStartPositionEnum VerticalStartPosition { get; set; } = VerticalStartPositionEnum.Top;
+
+            /// <summary>
+            /// 通知のZIndex
+            /// </summary>
+            public int ZIndex { get; set; } = 3;
+        }
 
         /// <summary>
         /// 通知コンテキスト
