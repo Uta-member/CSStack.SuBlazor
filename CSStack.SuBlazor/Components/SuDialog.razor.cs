@@ -8,6 +8,16 @@ namespace CSStack.SuBlazor
     public partial class SuDialog
     {
         /// <summary>
+        /// 背景Z-Index
+        /// </summary>
+        private int BackgroundZIndex => ZIndex;
+
+        /// <summary>
+        /// ダイアログZ-Index
+        /// </summary>
+        private int DialogContentZIndex => ZIndex + 1;
+
+        /// <summary>
         /// 属性
         /// </summary>
         [Parameter(CaptureUnmatchedValues = true)]
@@ -55,15 +65,5 @@ namespace CSStack.SuBlazor
         /// </summary>
         [Parameter]
         public int ZIndex { get; set; } = 1;
-
-        /// <summary>
-        /// 背景Z-Index
-        /// </summary>
-        private int BackgroundZIndex => ZIndex;
-
-        /// <summary>
-        /// ダイアログZ-Index
-        /// </summary>
-        private int DialogContentZIndex => ZIndex + 1;
     }
 }

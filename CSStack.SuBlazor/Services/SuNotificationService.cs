@@ -24,32 +24,63 @@ namespace CSStack.SuBlazor
         /// </summary>
         public event Action? OnNotificationContextsChange;
 
+        private void NotifyStateChanged() { OnNotificationContextsChange?.Invoke(); }
+
         /// <summary>
-        /// 通知開始水平位置
+        /// 通知を閉じる
         /// </summary>
-        public enum HorizontalStartPositionEnum
+        /// <param name="doClose">閉じるルール。trueなら閉じる。</param>
+        public void CloseNotification(Func<NotificationContext, bool>? doClose = null)
         {
-            Left = 0,
-            Center = 1,
-            Right = 2,
+            lock(_lock) // スレッドセーフにする
+            {
+                if(doClose != null)
+                {
+                    NotificationContexts = NotificationContexts.RemoveAll(x => doClose.Invoke(x));
+                } else
+                {
+                    NotificationContexts = [];
+                }
+            }
+            NotifyStateChanged();
         }
 
         /// <summary>
-        /// 通知スタックの向き
+        /// 表示時間を過ぎた通知を閉じる
         /// </summary>
-        public enum OrientationEnum
+        public void CloseTimeoutNotifications()
         {
-            Vertical = 0,
-            VerticalReverse = 1,
+            lock(_lock)
+            {
+                NotificationContexts = NotificationContexts.RemoveAll(
+                    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
+            }
+
+            NotifyStateChanged();
         }
 
         /// <summary>
-        /// 通知開始垂直位置
+        /// 通知を表示する
         /// </summary>
-        public enum VerticalStartPositionEnum
+        /// <param name="notificationReq"></param>
+        public void Notify<TComponent>(NotificationReq notificationReq)
+            where TComponent : ComponentBase
         {
-            Top = 0,
-            Bottom = 1,
+            var notificationContext = new NotificationContext()
+            {
+                ComponentType = typeof(TComponent),
+                Parameters = notificationReq.Parameters,
+                ComponentIdentifier = notificationReq.ComponentIdentifier,
+                Duration = notificationReq.Duration == null ? DefaultDuration : (int)notificationReq.Duration,
+                TimeStamp = DateTime.Now,
+            };
+
+            lock(_lock) // スレッドセーフにする
+            {
+                NotificationContexts = NotificationContexts.Add(notificationContext);
+            }
+
+            NotifyStateChanged();
         }
 
         /// <summary>
@@ -83,63 +114,32 @@ namespace CSStack.SuBlazor
         public int ZIndex { get; set; } = 3;
 
         /// <summary>
-        /// 通知を閉じる
+        /// 通知開始水平位置
         /// </summary>
-        /// <param name="doClose">閉じるルール。trueなら閉じる。</param>
-        public void CloseNotification(Func<NotificationContext, bool>? doClose = null)
+        public enum HorizontalStartPositionEnum
         {
-            lock (_lock) // スレッドセーフにする
-            {
-                if (doClose != null)
-                {
-                    NotificationContexts = NotificationContexts.RemoveAll(x => doClose.Invoke(x));
-                }
-                else
-                {
-                    NotificationContexts = [];
-                }
-            }
-            NotifyStateChanged();
+            Left = 0,
+            Center = 1,
+            Right = 2,
         }
 
         /// <summary>
-        /// 表示時間を過ぎた通知を閉じる
+        /// 通知スタックの向き
         /// </summary>
-        public void CloseTimeoutNotifications()
+        public enum OrientationEnum
         {
-            lock (_lock)
-            {
-                NotificationContexts = NotificationContexts.RemoveAll(
-                    x => DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
-            }
-
-            NotifyStateChanged();
+            Vertical = 0,
+            VerticalReverse = 1,
         }
 
         /// <summary>
-        /// 通知を表示する
+        /// 通知開始垂直位置
         /// </summary>
-        /// <param name="notificationReq"></param>
-        public void Notify<TComponent>(NotificationReq notificationReq) where TComponent : ComponentBase
+        public enum VerticalStartPositionEnum
         {
-            var notificationContext = new NotificationContext()
-            {
-                ComponentType = typeof(TComponent),
-                Parameters = notificationReq.Parameters,
-                ComponentIdentifier = notificationReq.ComponentIdentifier,
-                Duration = notificationReq.Duration == null ? DefaultDuration : (int)notificationReq.Duration,
-                TimeStamp = DateTime.Now,
-            };
-
-            lock (_lock) // スレッドセーフにする
-            {
-                NotificationContexts = NotificationContexts.Add(notificationContext);
-            }
-
-            NotifyStateChanged();
+            Top = 0,
+            Bottom = 1,
         }
-
-        private void NotifyStateChanged() => OnNotificationContextsChange?.Invoke();
 
         public sealed record Options
         {
@@ -178,6 +178,11 @@ namespace CSStack.SuBlazor
         /// </summary>
         public record NotificationContext
         {
+            /// <summary>
+            /// 自動で閉じるかどうか
+            /// </summary>
+            public bool AutoClose { get; set; } = true;
+
             /// <summary>
             /// ID
             /// </summary>
