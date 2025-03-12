@@ -1,0 +1,10 @@
+﻿@namespace CSStack.SuBlazor
+
+@if (Visible)
+{
+    <div class="su-dialog-background @BackgroundClass" style="z-index: @ZIndex; @BackgroundStyle">
+        <div class="su-dialog-content @Class" style="@Style" @attributes="AdditionalAttributes">
+            @ChildContent
+        </div>
+    </div>
+}

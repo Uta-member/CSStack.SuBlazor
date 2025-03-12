@@ -5,18 +5,8 @@ namespace CSStack.SuBlazor
     /// <summary>
     /// ダイアログ
     /// </summary>
-    public partial class SuDialog
+    public partial class SuDialogComponent
     {
-        /// <summary>
-        /// 背景Z-Index
-        /// </summary>
-        private int BackgroundZIndex => ZIndex;
-
-        /// <summary>
-        /// ダイアログZ-Index
-        /// </summary>
-        private int DialogContentZIndex => ZIndex + 1;
-
         /// <summary>
         /// 属性
         /// </summary>
