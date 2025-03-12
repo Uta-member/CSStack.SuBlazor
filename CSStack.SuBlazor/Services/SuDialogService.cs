@@ -7,8 +7,8 @@ namespace CSStack.SuBlazor
     {
         private readonly object _lock = new();
 
-        public SuDialogService(Options option) 
-        { 
+        public SuDialogService(Options option)
+        {
             ZIndex = option.ZIndex;
             BackgroundStyle = option.BackgroundStyle;
             BackgroundClass = option.BackgroundClass;
@@ -19,31 +19,61 @@ namespace CSStack.SuBlazor
         /// </summary>
         public event Action? OnDialogContextsChange;
 
-        /// <summary>
-        /// 背景のスタイル
-        /// </summary>
-        public string BackgroundStyle { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 背景のCSSクラス
-        /// </summary>
-        public string BackgroundClass { get; set; } = string.Empty;
-
         private void NotifyStateChanged() { OnDialogContextsChange?.Invoke(); }
 
         /// <summary>
-        /// 表示中のダイアログコンテキスト
+        /// ダイアログを全て閉じる
         /// </summary>
-        public ImmutableList<DialogContext> DialogContexts { get; private set; } = [];
+        public void CloseAllDialog()
+        {
+            lock(_lock)
+            {
+                DialogContexts = DialogContexts.Clear();
+            }
+            NotifyStateChanged();
+        }
+
+        /// <summary>
+        /// 一番上に表示されているダイアログを閉じる
+        /// </summary>
+        public void CloseDialog()
+        {
+            lock(_lock)
+            {
+                var targetDialog = DialogContexts.MaxBy(x => x.Index);
+                if(targetDialog == null)
+                {
+                    return;
+                }
+                DialogContexts = DialogContexts.Remove(targetDialog).OrderBy(x => x.Index).ToImmutableList();
+            }
+            NotifyStateChanged();
+        }
+
+        /// <summary>
+        /// IDを指定してダイアログを閉じる
+        /// </summary>
+        /// <param name="componentIdentifier"></param>
+        public void CloseDialog(string componentIdentifier)
+        {
+            lock(_lock)
+            {
+                DialogContexts = DialogContexts.RemoveAll(x => x.ComponentIdentifier == componentIdentifier)
+                    .OrderBy(x => x.Index)
+                    .ToImmutableList();
+            }
+            NotifyStateChanged();
+        }
 
         /// <summary>
         /// ダイアログを開く
         /// </summary>
         /// <typeparam name="TComponent"></typeparam>
         /// <param name="dialogOpenReq"></param>
-        public void OpenDialog<TComponent>(DialogOpenReq dialogOpenReq) where TComponent : ComponentBase
+        public void OpenDialog<TComponent>(DialogOpenReq dialogOpenReq)
+            where TComponent : ComponentBase
         {
-            lock (_lock) // スレッドセーフにする
+            lock(_lock) // スレッドセーフにする
             {
                 var context = new DialogContext()
                 {
@@ -60,46 +90,24 @@ namespace CSStack.SuBlazor
         }
 
         /// <summary>
-        /// IDを指定してダイアログを閉じる
+        /// 背景のCSSクラス
         /// </summary>
-        /// <param name="componentIdentifier"></param>
-        public void CloseDialog(string componentIdentifier)
-        {
-            lock (_lock)
-            {
-                DialogContexts = DialogContexts.RemoveAll(x => x.ComponentIdentifier == componentIdentifier).OrderBy(x => x.Index).ToImmutableList();
-            }
-            NotifyStateChanged();
-        }
+        public string BackgroundClass { get; set; } = string.Empty;
 
         /// <summary>
-        /// 一番上に表示されているダイアログを閉じる
+        /// 背景のスタイル
         /// </summary>
-        public void CloseDialog()
-        {
-            lock (_lock)
-            {
-                var targetDialog = DialogContexts.MaxBy(x => x.Index);
-                if (targetDialog == null)
-                {
-                    return;
-                }
-                DialogContexts = DialogContexts.Remove(targetDialog).OrderBy(x => x.Index).ToImmutableList();
-            }
-            NotifyStateChanged();
-        }
+        public string BackgroundStyle { get; set; } = string.Empty;
 
         /// <summary>
-        /// ダイアログを全て閉じる
+        /// 表示中のダイアログコンテキスト
         /// </summary>
-        public void CloseAllDialog()
-        {
-            lock (_lock)
-            {
-                DialogContexts = DialogContexts.Clear();
-            }
-            NotifyStateChanged();
-        }
+        public ImmutableList<DialogContext> DialogContexts { get; private set; } = [];
+
+        /// <summary>
+        /// ダイアログのZIndex
+        /// </summary>
+        public int ZIndex { get; set; } = 1000;
 
         /// <summary>
         /// ダイアログを開くリクエスト
@@ -107,37 +115,32 @@ namespace CSStack.SuBlazor
         public sealed record DialogOpenReq
         {
             /// <summary>
-            /// コンポーネントに渡すパラメータ
-            /// </summary>
-            public Dictionary<string, object?> Parameters { get; init; } = new();
-
-            /// <summary>
             /// ID
             /// </summary>
             public string ComponentIdentifier { get; set; } = Guid.NewGuid().ToString();
 
             /// <summary>
-            /// ダイアログを囲っているdivのスタイル
+            /// コンポーネントに渡すパラメータ
             /// </summary>
-            public string WrapperStyle { get; set; } = string.Empty;
+            public Dictionary<string, object?> Parameters { get; init; } = new();
 
             /// <summary>
             /// ダイアログを囲っているdivのCSSクラス
             /// </summary>
             public string WrapperClass { get; set; } = string.Empty;
-        }
 
-        /// <summary>
-        /// ダイアログのZIndex
-        /// </summary>
-        public int ZIndex { get; set; } = 3;
+            /// <summary>
+            /// ダイアログを囲っているdivのスタイル
+            /// </summary>
+            public string WrapperStyle { get; set; } = string.Empty;
+        }
 
         public sealed record Options
         {
             /// <summary>
-            /// ZIndex
+            /// 背景のCSSクラス
             /// </summary>
-            public int ZIndex { get; set; } = 3;
+            public string BackgroundClass { get; set; } = string.Empty;
 
             /// <summary>
             /// 背景のスタイル
@@ -145,9 +148,9 @@ namespace CSStack.SuBlazor
             public string BackgroundStyle { get; set; } = string.Empty;
 
             /// <summary>
-            /// 背景のCSSクラス
+            /// ZIndex
             /// </summary>
-            public string BackgroundClass { get; set; } = string.Empty;
+            public int ZIndex { get; set; } = 1000;
         }
 
         public sealed record DialogContext
@@ -163,24 +166,24 @@ namespace CSStack.SuBlazor
             public required Type ComponentType { get; init; }
 
             /// <summary>
-            /// コンポーネントに渡すパラメータ
-            /// </summary>
-            public Dictionary<string, object?> Parameters { get; init; } = new();
-
-            /// <summary>
             /// Index
             /// </summary>
             public required int Index { get; set; }
 
             /// <summary>
-            /// ダイアログを囲っているdivのスタイル
+            /// コンポーネントに渡すパラメータ
             /// </summary>
-            public string WrapperStyle { get; set; } = string.Empty;
+            public Dictionary<string, object?> Parameters { get; init; } = new();
 
             /// <summary>
             /// ダイアログを囲っているdivのCSSクラス
             /// </summary>
             public string WrapperClass { get; set; } = string.Empty;
+
+            /// <summary>
+            /// ダイアログを囲っているdivのスタイル
+            /// </summary>
+            public string WrapperStyle { get; set; } = string.Empty;
         }
     }
 }

@@ -5,7 +5,7 @@
 <h1>Hello, world!</h1>
 Welcome to your new app.
 
-<button class="btn btn-primary">ボタン</button>
+<button class="btn btn-primary" style="position: relative; z-index: 1003;" @onclick="() => SuDialogService.CloseDialog()">Close</button>
 
 @code {
     [Inject]
@@ -17,5 +17,20 @@ Welcome to your new app.
     {
         base.OnInitialized();
         SuNotificationService.Notify<NotificationComponent>(new SuNotificationService.NotificationReq());
+        SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
+        {
+            Parameters = new Dictionary<string, object?>()
+            {
+                { "Text", "ダイアログ1" },
+            }
+        });
+        SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
+        {
+            Parameters = new Dictionary<string, object?>()
+            {
+                { "Text", "ダイアログ2" },
+            },
+            WrapperClass = "d-flex"
+        });
     }
 }

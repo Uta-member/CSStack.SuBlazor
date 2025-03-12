@@ -52,8 +52,8 @@ namespace CSStack.SuBlazor
         {
             lock(_lock)
             {
-                //NotificationContexts = NotificationContexts.RemoveAll(
-                //    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
+                // NotificationContexts = NotificationContexts.RemoveAll(
+                // x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
                 NotificationContexts = NotificationContexts.Clear();
             }
 
@@ -113,7 +113,7 @@ namespace CSStack.SuBlazor
         /// <summary>
         /// 通知のZIndex
         /// </summary>
-        public int ZIndex { get; set; } = 3;
+        public int ZIndex { get; set; } = 1001;
 
         /// <summary>
         /// 通知開始水平位置
@@ -172,7 +172,7 @@ namespace CSStack.SuBlazor
             /// <summary>
             /// 通知のZIndex
             /// </summary>
-            public int ZIndex { get; set; } = 3;
+            public int ZIndex { get; set; } = 1001;
         }
 
         /// <summary>
@@ -217,6 +217,11 @@ namespace CSStack.SuBlazor
         public record NotificationReq
         {
             /// <summary>
+            /// 自動で閉じるかどうか
+            /// </summary>
+            public bool AutoClose { get; set; } = true;
+
+            /// <summary>
             /// ID
             /// </summary>
             public string ComponentIdentifier { get; set; } = Guid.NewGuid().ToString();
@@ -230,11 +235,6 @@ namespace CSStack.SuBlazor
             /// コンポーネントに渡すパラメータ
             /// </summary>
             public Dictionary<string, object?> Parameters { get; init; } = new();
-
-            /// <summary>
-            /// 自動で閉じるかどうか
-            /// </summary>
-            public bool AutoClose { get; set; } = true;
         }
     }
 }
