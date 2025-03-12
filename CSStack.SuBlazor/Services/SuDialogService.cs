@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Immutable;
 
 namespace CSStack.SuBlazor
 {
@@ -6,12 +7,27 @@ namespace CSStack.SuBlazor
     {
         private readonly object _lock = new();
 
-        public SuDialogService(Options option) { ZIndex = option.ZIndex; }
+        public SuDialogService(Options option) 
+        { 
+            ZIndex = option.ZIndex;
+            BackgroundStyle = option.BackgroundStyle;
+            BackgroundClass = option.BackgroundClass;
+        }
 
         /// <summary>
         /// DialogContextsの変更イベント
         /// </summary>
         public event Action? OnDialogContextsChange;
+
+        /// <summary>
+        /// 背景のスタイル
+        /// </summary>
+        public string BackgroundStyle { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 背景のCSSクラス
+        /// </summary>
+        public string BackgroundClass { get; set; } = string.Empty;
 
         private void NotifyStateChanged() { OnDialogContextsChange?.Invoke(); }
 
@@ -25,7 +41,7 @@ namespace CSStack.SuBlazor
         /// </summary>
         /// <typeparam name="TComponent"></typeparam>
         /// <param name="dialogOpenReq"></param>
-        public void OpenDialog<TComponent>(DialogOpenReq dialogOpenReq)
+        public void OpenDialog<TComponent>(DialogOpenReq dialogOpenReq) where TComponent : ComponentBase
         {
             lock (_lock) // スレッドセーフにする
             {
@@ -35,6 +51,8 @@ namespace CSStack.SuBlazor
                     ComponentType = typeof(TComponent),
                     Parameters = dialogOpenReq.Parameters,
                     Index = DialogContexts.MaxBy(x => x.Index)?.Index + 1 ?? 0,
+                    WrapperClass = dialogOpenReq.WrapperClass,
+                    WrapperStyle = dialogOpenReq.WrapperStyle,
                 };
                 DialogContexts = DialogContexts.Add(context).OrderBy(x => x.Index).ToImmutableList();
             }
@@ -97,6 +115,16 @@ namespace CSStack.SuBlazor
             /// ID
             /// </summary>
             public string ComponentIdentifier { get; set; } = Guid.NewGuid().ToString();
+
+            /// <summary>
+            /// ダイアログを囲っているdivのスタイル
+            /// </summary>
+            public string WrapperStyle { get; set; } = string.Empty;
+
+            /// <summary>
+            /// ダイアログを囲っているdivのCSSクラス
+            /// </summary>
+            public string WrapperClass { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -110,6 +138,16 @@ namespace CSStack.SuBlazor
             /// ZIndex
             /// </summary>
             public int ZIndex { get; set; } = 3;
+
+            /// <summary>
+            /// 背景のスタイル
+            /// </summary>
+            public string BackgroundStyle { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 背景のCSSクラス
+            /// </summary>
+            public string BackgroundClass { get; set; } = string.Empty;
         }
 
         public sealed record DialogContext
@@ -133,6 +171,16 @@ namespace CSStack.SuBlazor
             /// Index
             /// </summary>
             public required int Index { get; set; }
+
+            /// <summary>
+            /// ダイアログを囲っているdivのスタイル
+            /// </summary>
+            public string WrapperStyle { get; set; } = string.Empty;
+
+            /// <summary>
+            /// ダイアログを囲っているdivのCSSクラス
+            /// </summary>
+            public string WrapperClass { get; set; } = string.Empty;
         }
     }
 }

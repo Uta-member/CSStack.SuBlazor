@@ -5,7 +5,7 @@
     <div class="@CssClassName" style="z-index: @NotificationService.ZIndex;">
         @foreach (var notification in SortedNotificationContexts)
         {
-            <DynamicComponent Type="notification.ComponentType" Parameters="notification.Parameters" />
+            <DynamicComponent Type="notification.ComponentType" Parameters="notification.Parameters" @key="notification.ComponentIdentifier" />
         }
     </div>
 }

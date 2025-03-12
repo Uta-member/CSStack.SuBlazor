@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSuBlazorService();
+builder.Services.AddSuBlazorService(dialogOptions: new CSStack.SuBlazor.SuDialogService.Options() { BackgroundStyle = "background-color: rgba(0, 0, 0, 0.3);" });
 
 var app = builder.Build();
 

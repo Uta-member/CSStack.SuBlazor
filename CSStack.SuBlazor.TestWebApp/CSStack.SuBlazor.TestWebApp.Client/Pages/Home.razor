@@ -5,17 +5,30 @@
 <h1>Hello, world!</h1>
 Welcome to your new app.
 
-<SuDialogComponent Visible BackgroundStyle="background-color: rgba(0,0,0,1)">
-    <div style="background-color: white">dialogです</div>
-</SuDialogComponent>
-
 @code {
     [Inject]
     public required SuNotificationService SuNotificationService { get; set; }
+    [Inject]
+    public required SuDialogService SuDialogService { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         SuNotificationService.Notify<NotificationComponent>(new SuNotificationService.NotificationReq());
+        SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
+        {
+            Parameters = new Dictionary<string, object?>()
+            {
+                { "Text", "ダイアログ1" },
+            }
+        });
+        SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
+        {
+            Parameters = new Dictionary<string, object?>()
+            {
+                { "Text", "ダイアログ2" },
+            },
+            WrapperClass = "d-flex"
+        });
     }
 }
