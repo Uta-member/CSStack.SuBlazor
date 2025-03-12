@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor.TestWebApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor.TestWebApp.Client", "CSStack.SuBlazor.TestWebApp\CSStack.SuBlazor.TestWebApp.Client\CSStack.SuBlazor.TestWebApp.Client.csproj", "{F202A76B-3B3E-4C4F-B20C-530463C8CC59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor.Bootstrap", "CSStack.SuBlazor.Bootstrap\CSStack.SuBlazor.Bootstrap.csproj", "{D1D3CAEF-B65C-41FD-BD6D-96D7EAD2DAC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D3CAEF-B65C-41FD-BD6D-96D7EAD2DAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D3CAEF-B65C-41FD-BD6D-96D7EAD2DAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D3CAEF-B65C-41FD-BD6D-96D7EAD2DAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D3CAEF-B65C-41FD-BD6D-96D7EAD2DAC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CSStack.SuBlazor\CSStack.SuBlazor.csproj" />
+    <ProjectReference Include="..\..\CSStack.SuBlazor.Bootstrap\CSStack.SuBlazor.Bootstrap.csproj" />
   </ItemGroup>
 
 </Project>
