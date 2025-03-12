@@ -52,8 +52,9 @@ namespace CSStack.SuBlazor
         {
             lock(_lock)
             {
-                NotificationContexts = NotificationContexts.RemoveAll(
-                    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
+                //NotificationContexts = NotificationContexts.RemoveAll(
+                //    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
+                NotificationContexts = NotificationContexts.Clear();
             }
 
             NotifyStateChanged();
@@ -73,6 +74,7 @@ namespace CSStack.SuBlazor
                 ComponentIdentifier = notificationReq.ComponentIdentifier,
                 Duration = notificationReq.Duration == null ? DefaultDuration : (int)notificationReq.Duration,
                 TimeStamp = DateTime.Now,
+                AutoClose = notificationReq.AutoClose,
             };
 
             lock(_lock) // スレッドセーフにする
@@ -228,6 +230,11 @@ namespace CSStack.SuBlazor
             /// コンポーネントに渡すパラメータ
             /// </summary>
             public Dictionary<string, object?> Parameters { get; init; } = new();
+
+            /// <summary>
+            /// 自動で閉じるかどうか
+            /// </summary>
+            public bool AutoClose { get; set; } = true;
         }
     }
 }

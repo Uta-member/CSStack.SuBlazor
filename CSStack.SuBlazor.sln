@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor", "CSStack.SuBlazor\CSStack.SuBlazor.csproj", "{613777BA-DA7C-4784-BAA0-1990404B9C5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor.TestWebApp", "CSStack.SuBlazor.TestWebApp\CSStack.SuBlazor.TestWebApp\CSStack.SuBlazor.TestWebApp.csproj", "{E8D09114-0F12-46C4-86A8-4FA275262D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSStack.SuBlazor.TestWebApp.Client", "CSStack.SuBlazor.TestWebApp\CSStack.SuBlazor.TestWebApp.Client\CSStack.SuBlazor.TestWebApp.Client.csproj", "{F202A76B-3B3E-4C4F-B20C-530463C8CC59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{613777BA-DA7C-4784-BAA0-1990404B9C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{613777BA-DA7C-4784-BAA0-1990404B9C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{613777BA-DA7C-4784-BAA0-1990404B9C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8D09114-0F12-46C4-86A8-4FA275262D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8D09114-0F12-46C4-86A8-4FA275262D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8D09114-0F12-46C4-86A8-4FA275262D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8D09114-0F12-46C4-86A8-4FA275262D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F202A76B-3B3E-4C4F-B20C-530463C8CC59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
