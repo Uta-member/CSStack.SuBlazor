@@ -7,7 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSuBlazorService(dialogOptions: new CSStack.SuBlazor.SuDialogService.Options() { BackgroundStyle = "background-color: rgba(0, 0, 0, 0.3);" });
+builder.Services.AddSuBlazorService(
+    dialogOptions: new CSStack.SuBlazor.SuDialogService.Options() 
+    { 
+        BackgroundStyle = "",
+        BackgroundClass = "modal fade"
+    });
 
 var app = builder.Build();
 

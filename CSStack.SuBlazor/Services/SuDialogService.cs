@@ -65,6 +65,19 @@ namespace CSStack.SuBlazor
             NotifyStateChanged();
         }
 
+        public void CloseDialogByBackgroundClick()
+        {
+            lock (_lock)
+            {
+                var target = DialogContexts.MaxBy(x => x.Index);
+                if(target == null)
+                {
+                    return;
+                }
+                DialogContexts = DialogContexts.Remove(target).OrderBy(x => x.Index).ToImmutableList();
+            }
+        }
+
         /// <summary>
         /// ダイアログを開く
         /// </summary>
@@ -83,6 +96,7 @@ namespace CSStack.SuBlazor
                     Index = DialogContexts.MaxBy(x => x.Index)?.Index + 1 ?? 0,
                     WrapperClass = dialogOpenReq.WrapperClass,
                     WrapperStyle = dialogOpenReq.WrapperStyle,
+                    WrapperParameters = dialogOpenReq.WrapperParameters,
                 };
                 DialogContexts = DialogContexts.Add(context).OrderBy(x => x.Index).ToImmutableList();
             }
@@ -133,6 +147,12 @@ namespace CSStack.SuBlazor
             /// ダイアログを囲っているdivのスタイル
             /// </summary>
             public string WrapperStyle { get; set; } = string.Empty;
+
+
+            /// <summary>
+            /// ダイアログを囲っているdivに渡すパラメータ
+            /// </summary>
+            public Dictionary<string, object?> WrapperParameters { get; init; } = new();
         }
 
         public sealed record Options
@@ -184,6 +204,12 @@ namespace CSStack.SuBlazor
             /// ダイアログを囲っているdivのスタイル
             /// </summary>
             public string WrapperStyle { get; set; } = string.Empty;
+
+
+            /// <summary>
+            /// ダイアログを囲っているdivに渡すパラメータ
+            /// </summary>
+            public Dictionary<string, object?> WrapperParameters { get; init; } = new();
         }
     }
 }

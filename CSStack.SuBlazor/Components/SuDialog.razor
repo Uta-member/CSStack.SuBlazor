@@ -5,7 +5,7 @@
     <div class="su-dialog-background @SuDialogService.BackgroundClass" style="z-index: @SuDialogService.ZIndex; @SuDialogService.BackgroundStyle">
         @foreach (var dialogContext in SortedDialogContexts)
         {
-            <div class="su-dialog-content @dialogContext.WrapperClass" style="@dialogContext.WrapperStyle">
+            <div class="su-dialog-content @dialogContext.WrapperClass" style="@dialogContext.WrapperStyle" @attributes="dialogContext.WrapperParameters">
                 <DynamicComponent Type="dialogContext.ComponentType" Parameters="dialogContext.Parameters" @key="dialogContext.ComponentIdentifier" />
             </div>
         }
