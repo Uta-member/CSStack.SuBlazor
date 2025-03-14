@@ -5,7 +5,7 @@
         public SuBSDialogService(Options option)
             : base(option)
         {
-            BackgroundClass = $"{BackgroundClass} modal show";
+            BackgroundClass = $"{BackgroundClass} modal";
             BackgroundStyle = $"{BackgroundStyle} display: block;";
         }
     }

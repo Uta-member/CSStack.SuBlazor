@@ -25,6 +25,17 @@ $cyan: #00727a;
 
 .su-dialog-background {
     background-color: rgba(0, 0, 0, 0.3);
+    &.hide {
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.5s;
+    }
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        transition: 0.5s;
+    }
 }
 
 .su-dialog-content {

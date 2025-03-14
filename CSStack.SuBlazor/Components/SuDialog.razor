@@ -1,11 +1,9 @@
 ﻿@namespace CSStack.SuBlazor
 
-@if (SuDialogService.DialogContexts.Any())
-{
-    <div class="su-dialog-background @SuDialogService.BackgroundClass" style="z-index: @SuDialogService.ZIndex; @SuDialogService.BackgroundStyle">
-        @foreach (var dialogContext in SortedDialogContexts)
-        {
-            <DynamicComponent Type="dialogContext.ComponentType" Parameters="dialogContext.Parameters" @key="dialogContext.ComponentIdentifier" />
-        }
-    </div>
-}
+
+<div class="su-dialog-background @(SuDialogService.DialogContexts.Any() ? "show" : "hide") @SuDialogService.BackgroundClass" style="z-index: @SuDialogService.ZIndex; @SuDialogService.BackgroundStyle">
+    @foreach (var dialogContext in SortedDialogContexts)
+    {
+        <DynamicComponent Type="dialogContext.ComponentType" Parameters="dialogContext.Parameters" @key="dialogContext.ComponentIdentifier" />
+    }
+</div>
