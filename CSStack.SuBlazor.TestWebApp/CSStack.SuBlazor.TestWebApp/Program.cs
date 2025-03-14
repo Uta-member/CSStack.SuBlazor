@@ -4,15 +4,9 @@ using static CSStack.SuBlazor.SuServiceBuilder;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveWebAssemblyComponents();
+builder.Services.AddRazorComponents().AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSuBlazorService(
-    dialogOptions: new CSStack.SuBlazor.SuDialogService.Options() 
-    { 
-        BackgroundStyle = "",
-        BackgroundClass = "modal fade"
-    });
+builder.Services.AddSuBlazorService();
 
 var app = builder.Build();
 

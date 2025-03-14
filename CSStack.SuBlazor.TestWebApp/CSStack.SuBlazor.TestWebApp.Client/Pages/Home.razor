@@ -23,14 +23,7 @@ Welcome to your new app.
             {
                 { "Text", "ダイアログ1" },
             },
-        });
-        SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
-        {
-            Parameters = new Dictionary<string, object?>()
-            {
-                { "Text", "ダイアログ2" },
-            },
-            WrapperClass = "d-flex"
+            WrapperClass = "modal-dialog",
         });
     }
 }

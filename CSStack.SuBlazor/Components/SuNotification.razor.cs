@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Immutable;
+using System.Collections.Specialized;
 using System.Text;
 using static CSStack.SuBlazor.SuNotificationService;
 
@@ -12,38 +13,17 @@ namespace CSStack.SuBlazor
     {
         private Timer? _timer;
 
-        private ImmutableList<NotificationContext> SortedNotificationContexts => NotificationService?.NotificationContexts.OrderBy(
-                x => x.TimeStamp)
-                .ToImmutableList() ??
-            [];
-
-        protected override void OnInitialized()
-        {
-            _timer = new Timer(
-                _ => InvokeAsync(() => NotificationService.CloseTimeoutNotifications()),
-                null,
-                1000,
-                1000);
-            NotificationService.OnNotificationContextsChange += StateHasChanged;
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose();
-            NotificationService.OnNotificationContextsChange -= StateHasChanged;
-        }
-
         public string CssClassName
         {
             get
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("su-notification-container");
-                if(NotificationService == null)
+                if (NotificationService == null)
                 {
                     return string.Empty;
                 }
-                switch(NotificationService.VerticalStartPosition)
+                switch (NotificationService.VerticalStartPosition)
                 {
                     case VerticalStartPositionEnum.Top:
                         sb.Append(" v-top");
@@ -52,7 +32,7 @@ namespace CSStack.SuBlazor
                         sb.Append(" v-bottom");
                         break;
                 }
-                switch(NotificationService.HorizontalStartPosition)
+                switch (NotificationService.HorizontalStartPosition)
                 {
                     case HorizontalStartPositionEnum.Left:
                         sb.Append(" h-left");
@@ -64,7 +44,7 @@ namespace CSStack.SuBlazor
                         sb.Append(" h-right");
                         break;
                 }
-                switch(NotificationService.Orientation)
+                switch (NotificationService.Orientation)
                 {
                     case OrientationEnum.Vertical:
                         sb.Append(" vertical");
@@ -80,5 +60,29 @@ namespace CSStack.SuBlazor
 
         [Inject]
         public required SuNotificationService NotificationService { get; set; }
+
+        private ImmutableList<NotificationContext> SortedNotificationContexts =>
+        NotificationService?.NotificationContexts.OrderBy(x => x.TimeStamp).ToImmutableList() ?? [];
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
+            NotificationService.NotificationContexts.CollectionChanged -= Update;
+        }
+
+        protected override void OnInitialized()
+        {
+            _timer = new Timer(
+                _ => InvokeAsync(() => NotificationService.CloseTimeoutNotifications()),
+                null,
+                1000,
+                1000);
+            NotificationService.NotificationContexts.CollectionChanged += Update;
+        }
+
+        private void Update(object? sender, NotifyCollectionChangedEventArgs args)
+        {
+            InvokeAsync(StateHasChanged);
+        }
     }
 }

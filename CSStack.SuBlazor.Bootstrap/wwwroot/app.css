@@ -11894,3 +11894,6 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.su-dialog-background {
+  background-color: rgba(0, 0, 0, 0.3);
+}

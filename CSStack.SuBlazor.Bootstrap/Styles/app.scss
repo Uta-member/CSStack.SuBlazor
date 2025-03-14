@@ -22,3 +22,7 @@ $teal: #00b294;
 $cyan: #00727a;
 
 @use "./node_modules/bootstrap/scss/bootstrap.scss";
+
+.su-dialog-background {
+    background-color: rgba(0, 0, 0, 0.3);
+}
