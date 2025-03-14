@@ -10,7 +10,8 @@ Welcome to your new app.
 
 @code {
     [Inject]
-    public required SuNotificationService SuNotificationService { get; set; }
+    public required SuBSNotificationService SuNotificationService { get; set; }
+
     [Inject]
     public required SuDialogService SuDialogService { get; set; }
 
@@ -27,7 +28,11 @@ Welcome to your new app.
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        SuNotificationService.Notify<NotificationComponent>(new SuNotificationService.NotificationReq());
-        
+        SuNotificationService.Notify(new SuBSNotificationService.BasicNotificationReq()
+        {
+            Title = "タイトル",
+            Body = "通知の内容です。",
+            SubTitle = "サブタイトル",
+        });
     }
 }

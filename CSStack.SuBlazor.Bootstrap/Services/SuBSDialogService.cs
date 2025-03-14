@@ -2,8 +2,8 @@
 {
     public sealed class SuBSDialogService : SuDialogService
     {
-        public SuBSDialogService(Options option)
-            : base(option)
+        public SuBSDialogService(Options options)
+            : base(options)
         {
             BackgroundClass = $"{BackgroundClass} modal";
             BackgroundStyle = $"{BackgroundStyle} display: block;";

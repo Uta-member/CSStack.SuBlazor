@@ -1,0 +1,17 @@
+﻿@namespace CSStack.SuBlazor.Bootstrap
+
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" @attributes=AdditionalAttributes>
+    @if(Header != null)
+    {
+        <div class="toast-header">
+            @Header
+        </div>
+    }
+
+    @if(Body != null)
+    {
+        <div class="toast-body">
+            @Body
+        </div>
+    }
+</div>

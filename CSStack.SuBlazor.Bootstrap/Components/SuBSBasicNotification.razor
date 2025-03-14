@@ -1,0 +1,23 @@
+﻿@namespace CSStack.SuBlazor.Bootstrap
+
+<SuBSNotification>
+    <Header>
+        @if(!(string.IsNullOrWhiteSpace(Title) && string.IsNullOrWhiteSpace(SubTitle)))
+        {
+            @if (!string.IsNullOrWhiteSpace(Title))
+            {
+                <strong class="me-auto">@Title</strong>
+            }
+            @if (!string.IsNullOrWhiteSpace(SubTitle))
+            {
+                <small>@SubTitle</small>
+            }
+        }
+    </Header>
+    <Body>
+        @if (!string.IsNullOrWhiteSpace(Body))
+        {
+            <span>@Body</span>
+        }
+    </Body>
+</SuBSNotification>

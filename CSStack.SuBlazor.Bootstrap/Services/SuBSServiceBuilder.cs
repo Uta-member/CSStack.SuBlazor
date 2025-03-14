@@ -6,13 +6,16 @@ namespace CSStack.SuBlazor.Bootstrap
     {
         public static void AddSuBlazorBootstrapService(
             this IServiceCollection services,
-            SuNotificationService.Options? notificationOptions = null,
+            SuBSNotificationService.Options? notificationOptions = null,
             SuBSDialogService.Options? dialogOptions = null)
         {
-            services.AddSingleton<SuNotificationService>(
-                new SuNotificationService(notificationOptions ?? new SuNotificationService.Options()));
-            services.AddSingleton<SuDialogService>(
-                new SuBSDialogService(dialogOptions ?? new SuBSDialogService.Options()));
+            var notificationService = new SuBSNotificationService(
+                notificationOptions ?? new SuBSNotificationService.Options());
+            var dialogService = new SuBSDialogService(dialogOptions ?? new SuBSDialogService.Options());
+            services.AddSingleton<SuNotificationService>(notificationService);
+            services.AddSingleton<SuDialogService>(dialogService);
+            services.AddSingleton(notificationService);
+            services.AddSingleton(dialogService);
         }
     }
 }

@@ -6,13 +6,13 @@ namespace CSStack.SuBlazor
 {
     public class SuDialogService
     {
-        private readonly object _lock = new();
+        protected readonly object Lock = new();
 
-        public SuDialogService(Options option)
+        public SuDialogService(Options options)
         {
-            ZIndex = option.ZIndex;
-            BackgroundStyle = option.BackgroundStyle;
-            BackgroundClass = option.BackgroundClass;
+            ZIndex = options.ZIndex;
+            BackgroundStyle = options.BackgroundStyle;
+            BackgroundClass = options.BackgroundClass;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace CSStack.SuBlazor
         /// </summary>
         public void CloseAllDialog()
         {
-            lock (_lock)
+            lock (Lock)
             {
                 DialogContexts.Clear();
             }
@@ -51,7 +51,7 @@ namespace CSStack.SuBlazor
         /// </summary>
         public void CloseDialog()
         {
-            lock (_lock)
+            lock (Lock)
             {
                 var targetDialog = DialogContexts.MaxBy(x => x.Index);
                 if (targetDialog == null)
@@ -68,7 +68,7 @@ namespace CSStack.SuBlazor
         /// <param name="componentIdentifier"></param>
         public void CloseDialog(string componentIdentifier)
         {
-            lock (_lock)
+            lock (Lock)
             {
                 var targets = DialogContexts.Where(x => x.ComponentIdentifier == componentIdentifier).ToImmutableList();
                 foreach (var target in targets)
@@ -80,7 +80,7 @@ namespace CSStack.SuBlazor
 
         public void CloseDialogByBackgroundClick()
         {
-            lock (_lock)
+            lock (Lock)
             {
                 var target = DialogContexts.MaxBy(x => x.Index);
                 if (target == null)
@@ -98,7 +98,7 @@ namespace CSStack.SuBlazor
         /// <param name="dialogOpenReq"></param>
         public void OpenDialog<TComponent>(DialogOpenReq dialogOpenReq) where TComponent : ComponentBase
         {
-            lock (_lock) // スレッドセーフにする
+            lock (Lock) // スレッドセーフにする
             {
                 var context = new DialogContext()
                 {

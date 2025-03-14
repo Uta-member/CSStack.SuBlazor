@@ -2,7 +2,7 @@
 
 namespace CSStack.SuBlazor.Bootstrap
 {
-    public partial class SuBSDialogContent
+    public partial class SuBSNotification
     {
         /// <summary>
         /// 属性
@@ -12,9 +12,6 @@ namespace CSStack.SuBlazor.Bootstrap
 
         [Parameter]
         public RenderFragment? Body { get; set; }
-
-        [Parameter]
-        public RenderFragment? Footer { get; set; }
 
         [Parameter]
         public RenderFragment? Header { get; set; }

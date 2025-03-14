@@ -9,7 +9,7 @@ namespace CSStack.SuBlazor
     /// </summary>
     public class SuNotificationService
     {
-        private readonly object _lock = new();
+        protected readonly object Lock = new();
 
         public SuNotificationService(Options options)
         {
@@ -84,7 +84,7 @@ namespace CSStack.SuBlazor
         /// <param name="doClose">閉じるルール。trueなら閉じる。</param>
         public void CloseNotification(Func<NotificationContext, bool>? doClose = null)
         {
-            lock (_lock) // スレッドセーフにする
+            lock (Lock) // スレッドセーフにする
             {
                 if (doClose != null)
                 {
@@ -107,7 +107,7 @@ namespace CSStack.SuBlazor
         /// </summary>
         public void CloseTimeoutNotifications()
         {
-            lock (_lock)
+            lock (Lock)
             {
                 var targets = NotificationContexts.Where(
                     x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration))
@@ -135,7 +135,7 @@ namespace CSStack.SuBlazor
                 AutoClose = notificationReq.AutoClose,
             };
 
-            lock (_lock) // スレッドセーフにする
+            lock (Lock) // スレッドセーフにする
             {
                 NotificationContexts.Add(notificationContext);
             }
