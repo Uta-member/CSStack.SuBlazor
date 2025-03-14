@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using static CSStack.SuBlazor.SuServiceBuilder;
+using static CSStack.SuBlazor.Bootstrap.SuBSServiceBuilder;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddSuBlazorService();
+builder.Services.AddSuBlazorBootstrapService();
 
 await builder.Build().RunAsync();

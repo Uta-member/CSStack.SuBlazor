@@ -1,0 +1,24 @@
+﻿@namespace CSStack.SuBlazor.Bootstrap
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        @if(Header != null)
+        {
+            <div class="modal-header">
+                @Header
+            </div>
+        }
+        @if(Body != null)
+        {
+            <div class="modal-body">
+                @Body
+            </div>
+        }
+        @if(Footer != null)
+        {
+            <div class="modal-footer">
+                @Footer
+            </div>
+        }
+    </div>
+</div>

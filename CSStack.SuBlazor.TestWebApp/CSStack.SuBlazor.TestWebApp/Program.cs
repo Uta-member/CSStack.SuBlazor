@@ -1,12 +1,12 @@
 using CSStack.SuBlazor.TestWebApp.Components;
-using static CSStack.SuBlazor.SuServiceBuilder;
+using static CSStack.SuBlazor.Bootstrap.SuBSServiceBuilder;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSuBlazorService();
+builder.Services.AddSuBlazorBootstrapService();
 
 var app = builder.Build();
 

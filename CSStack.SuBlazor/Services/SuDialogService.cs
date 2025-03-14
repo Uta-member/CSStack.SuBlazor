@@ -106,9 +106,6 @@ namespace CSStack.SuBlazor
                     ComponentType = typeof(TComponent),
                     Parameters = dialogOpenReq.Parameters,
                     Index = DialogContexts.MaxBy(x => x.Index)?.Index + 1 ?? 0,
-                    WrapperClass = dialogOpenReq.WrapperClass,
-                    WrapperStyle = dialogOpenReq.WrapperStyle,
-                    WrapperParameters = dialogOpenReq.WrapperParameters,
                 };
                 DialogContexts.Add(context);
             }
@@ -135,21 +132,6 @@ namespace CSStack.SuBlazor
             /// コンポーネントに渡すパラメータ
             /// </summary>
             public Dictionary<string, object?> Parameters { get; init; } = new();
-
-            /// <summary>
-            /// ダイアログを囲っているdivのCSSクラス
-            /// </summary>
-            public string WrapperClass { get; set; } = string.Empty;
-
-            /// <summary>
-            /// ダイアログを囲っているdivに渡すパラメータ
-            /// </summary>
-            public Dictionary<string, object?> WrapperParameters { get; init; } = new();
-
-            /// <summary>
-            /// ダイアログを囲っているdivのスタイル
-            /// </summary>
-            public string WrapperStyle { get; set; } = string.Empty;
         }
 
         /// <summary>
@@ -166,21 +148,6 @@ namespace CSStack.SuBlazor
             /// コンポーネントに渡すパラメータ
             /// </summary>
             public Dictionary<string, object?> Parameters { get; init; } = new();
-
-            /// <summary>
-            /// ダイアログを囲っているdivのCSSクラス
-            /// </summary>
-            public string WrapperClass { get; set; } = string.Empty;
-
-            /// <summary>
-            /// ダイアログを囲っているdivに渡すパラメータ
-            /// </summary>
-            public Dictionary<string, object?> WrapperParameters { get; init; } = new();
-
-            /// <summary>
-            /// ダイアログを囲っているdivのスタイル
-            /// </summary>
-            public string WrapperStyle { get; set; } = string.Empty;
         }
 
         public sealed record Options
