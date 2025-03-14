@@ -6,7 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Version>0.0.8</Version>
     <Authors>Uta Sugane</Authors>
-    <Company>SBS情報システム</Company>
     <Description>Blazor用のシンプルなコンポーネントツールキット集。</Description>
   </PropertyGroup>
 

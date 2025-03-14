@@ -4,6 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>CSStack.SuBlazor.Bootstrap</Title>
+    <Version>0.0.1</Version>
+    <Authors>Uta Sugane</Authors>
+    <Description>Blazor向けのBootstrapUIコンポーネントライブラリ</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
