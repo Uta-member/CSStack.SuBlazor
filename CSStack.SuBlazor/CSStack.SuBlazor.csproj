@@ -8,6 +8,7 @@
     <Authors>Uta Sugane</Authors>
     <Description>Blazor用のシンプルなコンポーネントツールキット集。</Description>
     <PackageIcon>CSStack.png</PackageIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
