@@ -18,12 +18,12 @@ Welcome to your new app.
     private void OpenDialog()
     {
         SuDialogService.OpenDialog<DialogComponent>(new SuDialogService.DialogOpenReq()
-            {
-                Parameters = new Dictionary<string, object?>()
+        {
+            Parameters = new Dictionary<string, object?>()
             {
                 { "Text", $"ダイアログ" },
             },
-            });
+        });
     }
     protected override void OnInitialized()
     {
