@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 
 namespace CSStack.SuBlazor
@@ -87,7 +88,8 @@ namespace CSStack.SuBlazor
             {
                 if (doClose != null)
                 {
-                    var targets = NotificationContexts.Where(x => doClose.Invoke(x));
+                    var targets = NotificationContexts.Where(x => doClose.Invoke(x)).ToImmutableList();
+                    ;
                     foreach (var target in targets)
                     {
                         NotificationContexts.Remove(target);
@@ -108,7 +110,8 @@ namespace CSStack.SuBlazor
             lock (_lock)
             {
                 var targets = NotificationContexts.Where(
-                    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration));
+                    x => x.AutoClose && DateTime.Now > x.TimeStamp.AddMilliseconds(x.Duration))
+                    .ToImmutableList();
                 foreach (var target in targets)
                 {
                     NotificationContexts.Remove(target);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 
 namespace CSStack.SuBlazor
@@ -69,7 +70,7 @@ namespace CSStack.SuBlazor
         {
             lock (_lock)
             {
-                var targets = DialogContexts.Where(x => x.ComponentIdentifier == componentIdentifier);
+                var targets = DialogContexts.Where(x => x.ComponentIdentifier == componentIdentifier).ToImmutableList();
                 foreach (var target in targets)
                 {
                     DialogContexts.Remove(target);
