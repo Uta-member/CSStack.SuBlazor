@@ -11,6 +11,7 @@
     <Description>Blazor向けのBootstrapUIコンポーネントライブラリ</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageIcon>CSStack.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +37,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSStack.SuBlazor\CSStack.SuBlazor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CSStack.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
   </ItemGroup>
 
 </Project>
